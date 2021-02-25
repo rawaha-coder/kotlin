@@ -12,6 +12,7 @@ import org.jetbrains.kotlin.fir.analysis.diagnostics.FirPsiDiagnostic
 import org.jetbrains.kotlin.fir.declarations.FirDeclaration
 import org.jetbrains.kotlin.fir.declarations.FirFile
 import org.jetbrains.kotlin.idea.fir.low.level.api.util.addValueFor
+import org.jetbrains.kotlin.idea.fir.low.level.api.util.checkIsResolvedToBodyResolve
 
 internal class FileStructureElementDiagnosticsCollector private constructor(private val useExtendedCheckers: Boolean) {
     companion object {
@@ -51,8 +52,13 @@ internal class FileStructureElementDiagnosticsCollector private constructor(priv
 
         override fun getDeclarationActionOnDeclarationEnter(
             declaration: FirDeclaration,
-        ): DiagnosticCollectorDeclarationAction =
-            onDeclarationEnter.invoke(declaration)
+        ): DiagnosticCollectorDeclarationAction {
+            val action = onDeclarationEnter.invoke(declaration)
+            if (declaration !is FirFile && action.checkInCurrentDeclaration) {
+                declaration.checkIsResolvedToBodyResolve()
+            }
+            return action
+        }
 
         override fun onDeclarationExit(declaration: FirDeclaration) {
             onDeclarationExit.invoke(declaration)
