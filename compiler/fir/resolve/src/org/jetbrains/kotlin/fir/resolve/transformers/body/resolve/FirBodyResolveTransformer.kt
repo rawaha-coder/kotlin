@@ -237,6 +237,7 @@ open class FirBodyResolveTransformer(
     open fun transformDeclarationContent(
         declaration: FirDeclaration, data: ResolutionMode
     ): CompositeTransformResult<FirDeclaration> {
+        replaceDeclarationResolvePhaseIfNeeded(declaration, transformerPhase)
         return transformElement(declaration, data)
     }
 
@@ -365,9 +366,4 @@ open class FirBodyResolveTransformer(
     }
 
     // --------------------------------------------------------------------------
-
-    fun <D> FirElement.visitNoTransform(transformer: FirTransformer<D>, data: D) {
-        val result = this.transform<FirElement, D>(transformer, data)
-        require(result.single === this) { "become ${result.single}: `${result.single.render()}`, was ${this}: `${this.render()}`" }
-    }
 }

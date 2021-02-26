@@ -136,7 +136,7 @@ open class FirDeclarationsResolveTransformer(transformer: FirBodyResolveTransfor
             if (returnTypeRef !is FirImplicitTypeRef && implicitTypeOnly) return@withTypeParametersOf property.compose()
             if (property.resolvePhase == transformerPhase) return@withTypeParametersOf property.compose()
             if (property.resolvePhase == FirResolvePhase.IMPLICIT_TYPES_BODY_RESOLVE && transformerPhase == FirResolvePhase.BODY_RESOLVE) {
-                transformer.replaceDeclarationResolvePhaseIfNeeded(property, transformerPhase)
+                transformer.replaceDeclarationResolvePhaseRecursivelyIfNeeded(property, transformerPhase)
                 return@withTypeParametersOf property.compose()
             }
             dataFlowAnalyzer.enterProperty(property)
@@ -519,7 +519,7 @@ open class FirDeclarationsResolveTransformer(transformer: FirBodyResolveTransfor
     ): CompositeTransformResult<FirSimpleFunction> {
         if (simpleFunction.resolvePhase == transformerPhase) return simpleFunction.compose()
         if (simpleFunction.resolvePhase == FirResolvePhase.IMPLICIT_TYPES_BODY_RESOLVE && transformerPhase == FirResolvePhase.BODY_RESOLVE) {
-            transformer.replaceDeclarationResolvePhaseIfNeeded(simpleFunction, transformerPhase)
+            transformer.replaceDeclarationResolvePhaseRecursivelyIfNeeded(simpleFunction, transformerPhase)
             return simpleFunction.compose()
         }
         val returnTypeRef = simpleFunction.returnTypeRef
@@ -708,8 +708,8 @@ open class FirDeclarationsResolveTransformer(transformer: FirBodyResolveTransfor
 
     override fun transformValueParameter(valueParameter: FirValueParameter, data: ResolutionMode): CompositeTransformResult<FirStatement> {
         context.storeVariable(valueParameter)
+        transformer.replaceDeclarationResolvePhaseIfNeeded(valueParameter, transformerPhase)
         if (valueParameter.returnTypeRef is FirImplicitTypeRef) {
-            transformer.replaceDeclarationResolvePhaseIfNeeded(valueParameter, transformerPhase)
             valueParameter.replaceReturnTypeRef(
                 valueParameter.returnTypeRef.errorTypeFromPrototype(ConeSimpleDiagnostic("Unresolved value parameter type"))
             )
