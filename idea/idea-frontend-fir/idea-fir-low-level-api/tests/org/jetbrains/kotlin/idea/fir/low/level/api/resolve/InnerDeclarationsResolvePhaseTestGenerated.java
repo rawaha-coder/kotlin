@@ -39,7 +39,6 @@ public class InnerDeclarationsResolvePhaseTestGenerated extends AbstractInnerDec
         runTest("idea/idea-frontend-fir/idea-fir-low-level-api/testdata/innerDeclarationsResolve/enum.kt");
     }
 
-
     @TestMetadata("functionValueParameter.kt")
     public void testFunctionValueParameter() throws Exception {
         runTest("idea/idea-frontend-fir/idea-fir-low-level-api/testdata/innerDeclarationsResolve/functionValueParameter.kt");
