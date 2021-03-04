@@ -30,7 +30,7 @@ if "%_arg%" == "" goto loopend
 if "%_arg:~0,2%"=="-J" (
   if "%_arg:~2%"=="" (
     echo error: empty -J argument
-    exit /b
+    goto error
   )
   set JAVA_OPTS=%JAVA_OPTS% "%_arg:~2%"
 ) else (
@@ -71,7 +71,6 @@ if "!_KOTLIN_RUNNER!"=="1" (
     %_KOTLIN_COMPILER% %KOTLIN_OPTS%
 )
 
-exit /b %ERRORLEVEL%
 goto end
 
 rem ##########################################################################
@@ -107,5 +106,8 @@ rem Needs to be executed in the EnableDelayedExpansion mode.
   )
 goto :eof
 
+:error
+set ERRORLEVEL=1
+
 :end
-endlocal
+exit /b %ERRORLEVEL%

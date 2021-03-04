@@ -355,7 +355,8 @@ fun f() : Result<Int> = Result.success(42)
             "kotlinc",
             "$testDataDirectory/helloWorld.kt",
             "-d", tmpdir.path,
-            "-J", expectedStdout = "error: empty -J argument\n"
+            "-J", expectedStdout = "error: empty -J argument\n",
+            expectedExitCode = 1
         )
     }
 }
