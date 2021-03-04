@@ -274,6 +274,7 @@ public actual fun String.compareTo(other: String, ignoreCase: Boolean = false): 
  *
  * @sample samples.text.Strings.contentEquals
  */
+@SinceKotlin("1.5")
 public actual infix fun CharSequence?.contentEquals(other: CharSequence?): Boolean = contentEqualsImpl(other)
 
 /**
@@ -283,6 +284,7 @@ public actual infix fun CharSequence?.contentEquals(other: CharSequence?): Boole
  *
  * @sample samples.text.Strings.contentEquals
  */
+@SinceKotlin("1.5")
 public actual fun CharSequence?.contentEquals(other: CharSequence?, ignoreCase: Boolean): Boolean {
     return if (ignoreCase)
         this.contentEqualsIgnoreCaseImpl(other)

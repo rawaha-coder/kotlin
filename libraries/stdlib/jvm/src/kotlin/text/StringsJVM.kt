@@ -568,6 +568,7 @@ public inline fun String.contentEquals(stringBuilder: StringBuffer): Boolean = (
  *
  * @sample samples.text.Strings.contentEquals
  */
+@SinceKotlin("1.5")
 public actual infix fun CharSequence?.contentEquals(other: CharSequence?): Boolean {
     return if (this is String && other != null)
         contentEquals(other)
@@ -585,6 +586,7 @@ public actual infix fun CharSequence?.contentEquals(other: CharSequence?): Boole
  *
  * @sample samples.text.Strings.contentEquals
  */
+@SinceKotlin("1.5")
 public actual fun CharSequence?.contentEquals(other: CharSequence?, ignoreCase: Boolean): Boolean {
     return if (ignoreCase)
         contentEqualsIgnoreCaseImpl(other)

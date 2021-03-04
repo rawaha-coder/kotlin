@@ -1385,6 +1385,7 @@ public fun CharSequence.lines(): List<String> = lineSequence().toList()
  *
  * @sample samples.text.Strings.contentEquals
  */
+@SinceKotlin("1.5")
 public expect infix fun CharSequence?.contentEquals(other: CharSequence?): Boolean
 
 /**
@@ -1394,6 +1395,7 @@ public expect infix fun CharSequence?.contentEquals(other: CharSequence?): Boole
  *
  * @sample samples.text.Strings.contentEquals
  */
+@SinceKotlin("1.5")
 public expect fun CharSequence?.contentEquals(other: CharSequence?, ignoreCase: Boolean): Boolean
 
 internal fun CharSequence?.contentEqualsIgnoreCaseImpl(other: CharSequence?): Boolean {
