@@ -179,8 +179,9 @@ actual class ArrayList<E> private constructor(
         return destination
     }
 
-    override fun toArray(): Array<E> {
-        return array.copyOfRange(fromIndex = offset, toIndex = offset + length)
+    override fun toArray(): Array<Any?> {
+        @Suppress("UNCHECKED_CAST")
+        return array.copyOfRange(fromIndex = offset, toIndex = offset + length) as Array<Any?>
     }
 
     // ---------------------------- private ----------------------------
